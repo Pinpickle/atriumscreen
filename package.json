@@ -1,0 +1,19 @@
+{
+  "name": "AtriumScreen",
+  "version": "0.0.0",
+  "description": "Framework for displaying information to the masses",
+  "main": "index.js",
+  "dependencies": {
+    "express": "~4.1.1",
+    "socket.io": "^0.9.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "signage"
+  ],
+  "author": "Christian Silver",
+  "license": "BSD"
+}
