@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        title= title || "AtriumScreen"
+
+        //-Bootstrap
+        link(href="/as/assets/styles/bootstrap.min.css" rel="stylesheet")
+
+    body
+        //- Start some visual goodness!
+        nav.navbar.navbar-default(role="navigation")
+            div.container-fluid
+                div.navbar-header
+                    button.navbar-toggle(type="button" data-toggle="collapse" data-target="#nav-buttons")
+                span.navbar-brand AtriumScreen
+
+                div.collapse.navbar-collapse#nav-buttons
+                    ul.nav.navbar-nav
+                        //- Links go here
+
+
+        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+        script(src="/as/assets/js/boostrap.min.js")
