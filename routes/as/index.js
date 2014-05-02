@@ -18,3 +18,5 @@ router.use('/assets', express.static(path.join(as.dir, 'public')));
 router.get('/', function(req, res) {
     res.render(path.join(as.dir, 'templates/masters/admin.jade'));
 });
+
+
