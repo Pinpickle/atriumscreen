@@ -9,12 +9,12 @@ exports = module.exports = function(req, res, next) {
         return;
     }
 
-    atriumscreen.Screen.findOne({slug: screen}, function(err, screen) {
+    atriumscreen.Screen.model.findOne({slug: screen}).populate('decisionStack').exec(function(err, screen) {
         if ((err) || (!screen)) {
             next();
             return;
         }
-
+        console.log(screen.decisionStack);
         //It's out of our hands now
         screen.render(req, res, next);
     });
