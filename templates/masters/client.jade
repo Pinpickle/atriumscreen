@@ -6,6 +6,8 @@ html
         meta(name="viewport" content="width=device-width, initial-scale=1")
         title= title || "AtriumScreen"
 
+        each style in styles
+            link(href=style rel="stylesheet")
     body
 
         .as-content!=content
@@ -13,3 +15,6 @@ html
         script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
         script(src="/socket.io/socket.io.js")
         script(src="/public/as/js/atriumscreen.js")
+
+        each script in scripts
+            script(src=script)

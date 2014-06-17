@@ -35,6 +35,13 @@ exports.finally = function(app) {
 }
 
 exports.screenRender = function(req, res, next) {
+
+    //So we can define our own scripts and styles
+    //TODO: Stop the same file being loaded twice
+    //TODO: Make super slick bower integration for package management to solve the above
+    res.locals.styles = [];
+    res.locals.scripts = [];
+
     res.screen = function(view, locals) {
         if (!locals) locals = {};
         req.app.render(view, locals, function(err, html) {
