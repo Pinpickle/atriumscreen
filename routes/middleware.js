@@ -2,29 +2,64 @@ var atriumscreen = require('rfr')(''),
     keystone = atriumscreen.keystone,
     express = require('express'),
     path = require('path'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    jwt = require('jsonwebtoken'),
+    lessMiddleware = require('less-middleware');
+
 
 
 exports.initially = function(app) {
     app.use(exports.screenRender);
     atriumscreen.emit('middleware', app);
     keystone.pre('routes', exports.requireUser);
+    keystone.pre('routes', function(req, res, next) {
+        res.locals.jwt = jwt.sign({auth: true}, keystone.get('cookie secret'));
+        next();
+    });
 
+    //Create arrays for filling with custom scripts and styles
+    keystone.pre('routes', function(req, res, next) {
+        res.locals.styles = [];
+        res.locals.scripts = [];
+        res.locals.nav = atriumscreen.navDash;
+        next();
+    });
+
+    keystone.pre('routes', exports.adminRender);
 }
 
 exports.finally = function(app) {
+    app.use('/public/as', lessMiddleware(path.join(atriumscreen.dir, 'assets')));
     app.use('/public/as', express.static(path.join(atriumscreen.dir, 'assets')));
     atriumscreen.emit('static', app);
 }
 
 exports.screenRender = function(req, res, next) {
     res.screen = function(view, locals) {
+        if (!locals) locals = {};
         req.app.render(view, locals, function(err, html) {
             if (err) {
                 return next(err);
             }
             locals.content = html;
             res.render(path.join(atriumscreen.dir, 'templates/masters/client.jade'), locals);
+        });
+    }
+    next();
+}
+
+//Quickly steal that last function for the dash
+exports.adminRender = function(req, res, next) {
+    res.admin = function(view, locals) {
+        if (!locals) locals = {};
+        req.app.render(view, locals || {}, function(err, html) {
+            if (err) {
+                return next(err);
+            }
+            locals.content = html;
+
+            var view = new keystone.View(req, res);
+            view.render(path.join(atriumscreen.dir, 'templates/masters/admin.jade'), locals);
         });
     }
     next();
@@ -79,7 +114,7 @@ exports.flashMessages = function(req, res, next) {
  */
 
 exports.requireUser = function(req, res, next) {
-    if (req.url != '/keystone/signin') {
+    if ((req.url != '/keystone/signin') && (keystone.get('auth'))) {
         if (!req.user) {
             req.flash('error', 'Please sign in to access this page.');
             res.redirect('/as/keystone/signin');
