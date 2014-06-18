@@ -12,6 +12,8 @@ html
 
         .as-content!=content
 
+        script.
+            window.asData = !{clientData};
         script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
         script(src="/socket.io/socket.io.js")
         script(src="/public/as/js/atriumscreen.js")

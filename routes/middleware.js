@@ -42,6 +42,8 @@ exports.screenRender = function(req, res, next) {
     res.locals.styles = [];
     res.locals.scripts = [];
 
+    res.clientData = {as: { } };
+
     res.screen = function(view, locals) {
         if (!locals) locals = {};
         req.app.render(view, locals, function(err, html) {
@@ -49,6 +51,7 @@ exports.screenRender = function(req, res, next) {
                 return next(err);
             }
             locals.content = html;
+            locals.clientData = JSON.stringify(res.clientData);
             res.render(path.join(atriumscreen.dir, 'templates/masters/client.jade'), locals);
         });
     }
