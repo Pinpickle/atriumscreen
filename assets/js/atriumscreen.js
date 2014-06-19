@@ -2,8 +2,7 @@ var socket = io.connect('/screen');
 
 socket.on('connect', function() {
     socket.on('refresh', function() {
-        console.log('refresh!');
-        location.reload(true);
+        atriumscreen.refresh();
     });
 });
 
@@ -11,15 +10,26 @@ socket.on('connect', function() {
 var atriumscreen = new (function() {
     var self = this;
     if (asData.as.refresh) {
-        this.refresh = (new Date(asData.as.refresh)).getTime();
+        this.refreshTime = (new Date(asData.as.refresh)).getTime() - 2000; //To account for the fadeout animation time
     } else {
-        this.refresh = null;
+        this.refreshTime = null;
     }
     //The auto refresh is here!
     setInterval(function() {
-        if ((self.refresh) && ((new Date()).getTime() > self.refresh)) {
-            location.reload(true);
+        if ((self.refreshTime) && ((new Date()).getTime() > self.refreshTime)) {
+            self.refresh();
         }
     }, 1000);
+
+    this.refresh = function() {
+        $('.as-blockade').removeClass('ready');
+        setTimeout(function() {
+            location.reload(true);
+        }, 2000);
+    };
+
+    $(document).ready(function() {
+        $('.as-blockade').addClass('ready');
+    });
 
 })

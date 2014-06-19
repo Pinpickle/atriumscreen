@@ -21,6 +21,7 @@ exports.initially = function(app) {
     keystone.pre('routes', function(req, res, next) {
         res.locals.styles = [];
         res.locals.scripts = [];
+        res.locals.headScripts = [];
         res.locals.nav = atriumscreen.navDash;
         next();
     });
@@ -41,6 +42,7 @@ exports.screenRender = function(req, res, next) {
     //TODO: Make super slick bower integration for package management to solve the above
     res.locals.styles = [];
     res.locals.scripts = [];
+    res.locals.headScripts = [];
 
     res.clientData = {as: { } };
 
@@ -52,10 +54,26 @@ exports.screenRender = function(req, res, next) {
             }
             locals.content = html;
             locals.clientData = JSON.stringify(res.clientData);
+
+            res.locals.scripts = parseScripts(res.locals.scripts);
+            res.locals.headScripts = parseScripts(res.locals.headScripts);
+
             res.render(path.join(atriumscreen.dir, 'templates/masters/client.jade'), locals);
         });
     }
     next();
+}
+
+function parseScripts(scripts) {
+    newScripts = [];
+    _.each(scripts, function(script) {
+        if (_.isObject(script)) {
+            newScripts.push(_.assign({src: '', inline: false}, script));
+        } else {
+            newScripts.push({src: script, inline: false});
+        }
+    });
+    return newScripts;
 }
 
 //Quickly steal that last function for the dash
