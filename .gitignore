@@ -1,4 +1,4 @@
 node_modules
 out
 
-/assets/css/site.min.css
+/assets/css/*min.css
