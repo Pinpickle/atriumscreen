@@ -11,4 +11,8 @@ socket.on('connect', function() {
     $('#refresh').click(function() {
         socket.emit('refresh');
     });
+
+    $('#hard-refresh').click(function() {
+        socket.emit('hard refresh');
+    });
 });

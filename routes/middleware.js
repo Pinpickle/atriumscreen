@@ -58,7 +58,7 @@ exports.screenRender = function(req, res, next) {
             res.locals.scripts = parseScripts(res.locals.scripts);
             res.locals.headScripts = parseScripts(res.locals.headScripts);
 
-            res.render(path.join(atriumscreen.dir, 'templates/masters/client.jade'), locals);
+            res.render(path.join(atriumscreen.dir, 'templates/masters/client-frame.jade'), locals);
         });
     }
     next();

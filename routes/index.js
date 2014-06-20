@@ -4,5 +4,6 @@ var atriumscreen = require('rfr')(''),
 
 exports = module.exports = function(app) {
     app.get('/screen/:screen', require('./screen'));
+    app.get('/screen-frame/:screen', require('./screen/screen-frame'));
     atriumscreen.emit('routes', app);
 };

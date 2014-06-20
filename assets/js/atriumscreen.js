@@ -4,8 +4,11 @@ socket.on('connect', function() {
     socket.on('refresh', function() {
         atriumscreen.refresh();
     });
-});
 
+    socket.on('hard refresh', function() {
+        parent.location.reload(true);
+    });
+});
 
 var atriumscreen = new (function() {
     var self = this;
@@ -14,6 +17,10 @@ var atriumscreen = new (function() {
     } else {
         this.refreshTime = null;
     }
+
+    //Is this in an iframe or acting standalone?
+    this.inFrame = (window === top);
+
     //The auto refresh is here!
     setInterval(function() {
         if ((self.refreshTime) && ((new Date()).getTime() > self.refreshTime)) {
@@ -22,14 +29,14 @@ var atriumscreen = new (function() {
     }, 1000);
 
     this.refresh = function() {
-        $('.as-blockade').removeClass('ready');
+        if (self.inFrame) parent.$('.as-blockade').removeClass('ready');
         setTimeout(function() {
             location.reload(true);
         }, 2000);
     };
 
-    $(document).ready(function() {
-        $('.as-blockade').addClass('ready');
+    $(function() {
+        if (self.inFrame) parent.$('.as-blockade').addClass('ready');
     });
 
 })

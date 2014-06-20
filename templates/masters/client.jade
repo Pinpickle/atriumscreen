@@ -7,28 +7,9 @@ html
         title= title || "AtriumScreen"
 
         link(href="/public/as/css/client.min.css" rel="stylesheet")
-        each style in styles
-            link(href=style rel="stylesheet")
-
-        each script in headScripts
-            if script.inline
-                script.
-                    !{script.src}
-            else
-                script(src=script.src)
     body
 
-        .as-content!=content
+        iframe.as-iframe(src="/screen-frame/" + screen)
         .as-blockade
-        script.
-            window.asData = !{clientData};
-        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-        script(src="/socket.io/socket.io.js")
-        script(src="/public/as/js/atriumscreen.js")
 
-        each script in scripts
-            if script.inline
-                script.
-                    !{script.src}
-            else
-                script(src=script.src)
+        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
