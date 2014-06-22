@@ -17,7 +17,7 @@ var atriumscreen = new (function() {
 
     //The auto refresh is here!
     setInterval(function() {
-        if ((self.refreshTime) && ((new Date()).getTime() > self.refreshTime)) {
+        if ((self.refreshTime) && ((atriumscreen.Date) > self.refreshTime)) {
             self.refresh();
         }
     }, 1000);
