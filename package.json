@@ -17,7 +17,7 @@
     "keystone": "*",
     "less-middleware": "^1.0.3",
     "lodash": "^2.4.1",
-    "mongoose": "pinpickle/mongoose",
+    "mongoose": "~3.8.3",
     "rfr": "^1.0.0",
     "socket.io": "^1.0.4",
     "socketio-jwt": "^2.3.1",
