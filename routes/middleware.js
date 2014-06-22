@@ -53,6 +53,7 @@ exports.screenRender = function(req, res, next) {
                 return next(err);
             }
             locals.content = html;
+            res.clientData.as.now = Date.now();
             locals.clientData = JSON.stringify(res.clientData);
 
             res.locals.scripts = parseScripts(res.locals.scripts);
