@@ -1,6 +1,6 @@
 {
   "name": "atriumscreen",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Framework for displaying information to the masses",
   "main": "index.js",
   "repository": {

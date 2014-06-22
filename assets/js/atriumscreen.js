@@ -23,7 +23,10 @@ var atriumscreen = new (function() {
     }, 1000);
 
     this.refresh = function() {
-        if (self.inFrame) parent.$('.as-blockade').removeClass('ready');
+        if (self.inFrame) {
+            parent.refresher.notify('refresh');
+            parent.$('.as-blockade').removeClass('ready');
+        }
         setTimeout(function() {
             location.reload(true);
         }, 2000);
@@ -47,6 +50,10 @@ var atriumscreen = new (function() {
             }
         }
     }
+
+    $(function() {
+        if (self.inFrame) parent.refresher.notify('load');
+    });
 
     $(window).load(function() {
         self.createReadyListener()();

@@ -13,3 +13,23 @@ html
         .as-blockade
 
         script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+        script.
+            var refreser = window.refresher = { };
+            refresher.going = false;
+            refresher.notify = function(msg) {
+                var refresh = function() {
+                        $('.as-iframe').attr('src', $('.as-iframe').attr('src'));
+                        refresher.going = setTimeout(refresh, 5000);
+                    }
+                if (msg === 'refresh') {
+                    refresher.going = setTimeout(refresh, 10000);
+                }
+                if (msg === 'load') {
+                    if (refresher.going) {
+                        clearTimeout(refresher.going);
+                        refresher.going = null;
+                    }
+                }
+            }
+
+
