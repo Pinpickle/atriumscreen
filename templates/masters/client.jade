@@ -16,18 +16,22 @@ html
         script.
             var refreser = window.refresher = { };
             refresher.going = false;
+            refresher.timeout = null;
             refresher.notify = function(msg) {
                 var refresh = function() {
                         $('.as-iframe').attr('src', $('.as-iframe').attr('src'));
-                        refresher.going = setTimeout(refresh, 5000);
+                        refresher.going = true;
+                        refresher.timeout = setTimeout(refresh, 5000);
                     }
                 if (msg === 'refresh') {
-                    refresher.going = setTimeout(refresh, 600000);
+                    refresher.timeout = setTimeout(refresh, 20000);
+                    refresher.going = true;
+                    console.log(refresher.going);
                 }
                 if (msg === 'load') {
                     if (refresher.going) {
-                        clearTimeout(refresher.going);
-                        refresher.going = null;
+                        clearTimeout(refresher.timeout);
+                        refresher.going = false;
                     }
                 }
             }

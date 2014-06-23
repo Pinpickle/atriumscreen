@@ -9,6 +9,8 @@ var atriumscreen = new (function() {
     //Is this in an iframe or acting standalone?
     this.inFrame = (window !== top);
 
+    if (self.inFrame) parent.refresher.notify('load');
+
     if (this.inFrame) {
         if (!parent.as) {
             parent.as = { };
@@ -24,10 +26,12 @@ var atriumscreen = new (function() {
 
     this.refresh = function() {
         if (self.inFrame) {
-            parent.refresher.notify('refresh');
             parent.$('.as-blockade').removeClass('ready');
         }
         setTimeout(function() {
+            if (self.inFrame) {
+                parent.refresher.notify('refresh');
+            }
             location.reload(true);
         }, 2000);
     };
@@ -50,10 +54,6 @@ var atriumscreen = new (function() {
             }
         }
     }
-
-    $(function() {
-        if (self.inFrame) parent.refresher.notify('load');
-    });
 
     $(window).load(function() {
         self.createReadyListener()();
