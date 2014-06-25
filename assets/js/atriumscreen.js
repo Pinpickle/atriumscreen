@@ -9,6 +9,10 @@ var atriumscreen = new (function() {
     //Is this in an iframe or acting standalone?
     this.inFrame = (window !== top);
 
+    //The parent will call this function, it doesn't need to do anything at the moment
+    this.parentCall = function() { };
+
+
     if ((self.inFrame) && (parent.refresher)) parent.refresher.notify('load');
 
     if (this.inFrame) {
@@ -42,7 +46,16 @@ var atriumscreen = new (function() {
 
     this.readies = 0;
     this.ready = function() {
-        if (self.inFrame) parent.$('.as-blockade').addClass('ready');
+        var ready = function() {
+            if (self.inFrame) parent.$('.as-blockade').addClass('ready');
+        }
+
+        //If we can make a call to the parent, do so, or politely wait until it is ready
+        if ((!self.inFrame) || (parent.$)) {
+            ready();
+        } else {
+            self.parentCall = ready;
+        }
     }
 
     this.createReadyListener = function() {

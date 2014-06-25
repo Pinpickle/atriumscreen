@@ -35,5 +35,10 @@ html
                     }
                 }
             }
+            $(function() {
+                if ($('.as-iframe')[0].contentWindow.atriumscreen) {
+                    $('.as-iframe')[0].contentWindow.atriumscreen.parentCall();
+                }
+            });
 
 
