@@ -9,7 +9,7 @@ var atriumscreen = new (function() {
     //Is this in an iframe or acting standalone?
     this.inFrame = (window !== top);
 
-    if (self.inFrame) parent.refresher.notify('load');
+    if ((self.inFrame) && (parent.refresher)) parent.refresher.notify('load');
 
     if (this.inFrame) {
         if (!parent.as) {
